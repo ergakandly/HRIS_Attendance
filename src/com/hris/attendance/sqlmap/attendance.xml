@@ -1,0 +1,175 @@
+<!DOCTYPE sqlMap
+PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="attendance">
+	<select id="getDetailAttendance" parameterClass="java.util.Map" resultClass="com.hris.attendance.model.AttendanceBean">
+		SELECT 	attendanceDate,
+				checkIn,
+				checkOut,
+				workingHours, 
+				status
+		FROM 	v_detailAttendance
+		WHERE 	employeeId = #employeeId#
+		AND 	TO_DATE(attendanceDate, 'dd/mm/yyyy') BETWEEN 	TO_DATE('21/'|| TO_CHAR( ADD_MONTHS( TO_DATE(#period#, 'MONTH YYYY', 'nls_date_language = ENGLISH'), -1), 'MM/YYYY'), 'DD/MM/YYYY')
+															AND TO_DATE('20/'|| TO_CHAR( TO_DATE(#period#, 'MONTH YYYY', 'nls_date_language = ENGLISH'), 'MM/YYYY'), 'DD/MM/YYYY')
+		ORDER BY 1
+	</select>
+	
+	<select id="getTotalAttendance" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		SELECT 	COUNT(1) AS totalAttendance
+		FROM 	v_detailAttendance
+		WHERE 	employeeId = #employeeId#
+		AND 	TO_DATE(attendanceDate, 'dd/mm/yyyy') BETWEEN 	TO_DATE('21/'|| TO_CHAR( ADD_MONTHS( TO_DATE(#period#, 'MONTH YYYY', 'nls_date_language = ENGLISH'), -1), 'MM/YYYY'), 'DD/MM/YYYY')
+															AND TO_DATE('20/'|| TO_CHAR( TO_DATE(#period#, 'MONTH YYYY', 'nls_date_language = ENGLISH'), 'MM/YYYY'), 'DD/MM/YYYY')
+	</select>
+	
+	<select id="getTotalLate" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		SELECT 	NVL(COUNT(1),0) AS totalLate
+		FROM 	v_detailAttendance
+		WHERE 	employeeId = #employeeId#
+		AND 	TO_DATE(attendanceDate, 'dd/mm/yyyy') BETWEEN 	TO_DATE('21/'|| TO_CHAR( ADD_MONTHS( TO_DATE(#period#, 'MONTH YYYY', 'nls_date_language = ENGLISH'), -1), 'MM/YYYY'), 'DD/MM/YYYY')
+		                                                	AND TO_DATE('20/'|| TO_CHAR( TO_DATE(#period#, 'MONTH YYYY', 'nls_date_language = ENGLISH'), 'MM/YYYY'), 'DD/MM/YYYY')
+		AND 	(EXTRACT(HOUR FROM TO_TIMESTAMP (checkIn, 'DD MON YYYY HH24:MI:SS')) &gt; 8
+	    OR 		(EXTRACT(HOUR FROM TO_TIMESTAMP (checkIn, 'DD MON YYYY HH24:MI:SS')) = 8
+	    AND 	EXTRACT(MINUTE FROM TO_TIMESTAMP (checkIn, 'DD MON YYYY HH24:MI:SS')) &gt;= 0
+	    AND 	EXTRACT(SECOND FROM TO_TIMESTAMP (checkIn, 'DD MON YYYY HH24:MI:SS')) &gt; 0))
+	</select>
+	
+	<select id="getTotalWorkingTime" parameterClass="java.util.Map" resultClass="java.lang.String">
+		SELECT  NVL(SUM(EXTRACT( HOUR FROM diff )) + TRUNC(TRUNC(SUM(extract( MINUTE FROM diff )) +  SUM(EXTRACT( SECOND FROM diff ))/60)/60),0) || ' hour(s) ' ||
+		    	NVL(LPAD(MOD(SUM(EXTRACT( MINUTE FROM diff )) +  TRUNC( SUM(extract( SECOND FROM diff ))/60), 60), 2, '0'),0) || ' minute(s) ' ||
+		    	NVL(LPAD(MOD(SUM(EXTRACT( SECOND FROM diff )), 60), 2, '0'),0) || ' second(s)' AS totalWorkingTime
+		FROM (
+		    SELECT 	(TO_TIMESTAMP (checkOut, 'DD MON YYYY HH24:MI:SS') -
+		    		TO_TIMESTAMP (checkIn, 'DD MON YYYY HH24:MI:SS')) diff
+		    FROM 	v_detailAttendance
+		    WHERE 	employeeId = #employeeId#
+		    AND 	TO_DATE(attendanceDate, 'DD/MM/YYYY') BETWEEN 	TO_DATE('21/'|| TO_CHAR( ADD_MONTHS( TO_DATE(#period#, 'MONTH YYYY', 'nls_date_language = ENGLISH'), -1), 'MM/YYYY'), 'DD/MM/YYYY')
+		                                                AND TO_DATE('20/'|| TO_CHAR( TO_DATE(#period#, 'MONTH YYYY', 'nls_date_language = ENGLISH'), 'MM/YYYY'), 'DD/MM/YYYY')
+		)	
+	</select>
+	
+	<select id="getAllAttendanceDaily" parameterClass="java.util.Map" resultClass="com.hris.attendance.model.AttendanceBean">
+		SELECT 	NIK, employeeName, departmentName, locationName, checkIn, checkOut, workingHours, status
+		FROM 	v_detailAttendance
+		WHERE 	TO_DATE(attendanceDate, 'DD/MM/YYYY') = TO_DATE(#searchByDate#, 'DD/MM/YYYY')
+		AND 	LOWER(employeeName) LIKE LOWER('%$searchByName$%')
+		<dynamic prepend="AND">
+			<isNotEqual property="searchByDept" compareValue="All">
+				departmentId = #searchByDept#
+			</isNotEqual>
+		</dynamic>
+		<dynamic prepend="AND">
+			<isNotEqual property="searchByLoc" compareValue="All">
+				locationId = #searchByLoc#
+			</isNotEqual>
+		</dynamic>
+		ORDER BY 1
+	</select>
+	
+	<select id="getAllAttendancePeriod" parameterClass="java.util.Map" resultClass="com.hris.attendance.model.AttendanceMonthlyBean">
+		SELECT  dif.NIK,
+					dif.employeeName,
+		       	dif.departmentName,
+		        	dif.locationName,
+		       	NVL(COUNT(dif.diff), 0) AS totalAttendance,
+		        	NVL(COUNT(late.attendanceId), 0) AS totalLate,
+		        NVL(SUM(EXTRACT( HOUR FROM dif.diff )) + TRUNC(TRUNC(SUM(extract( MINUTE FROM dif.diff )) +  SUM(EXTRACT( SECOND FROM dif.diff ))/60)/60) || ' hour(s) ' ||
+	            LPAD(MOD(SUM(EXTRACT( MINUTE FROM dif.diff )) +  TRUNC( SUM(extract( SECOND FROM dif.diff ))/60), 60), 2, '0') || ' minute(s) ' ||
+	            LPAD(MOD(SUM(EXTRACT( SECOND FROM dif.diff )), 60), 2, '0') || ' second(s)', 0) AS totalWorkingTime           
+		FROM (
+		        SELECT 	diff,
+		                attendanceId,
+		                attendanceDate,
+		                NIK,
+		                employeeName, 
+		                departmentName, 
+		                locationName
+		        FROM 	v_getDiffWorkingTime
+		    ) dif 
+		    FULL OUTER JOIN
+		    (
+		        SELECT  attendanceId
+		        FROM 	v_getLate
+		    ) late
+		    ON dif.attendanceId = late.attendanceId
+		WHERE LOWER(dif.employeeName) LIKE LOWER('%$searchByName$%')
+		<dynamic prepend="AND">
+			<isNotEqual property="searchByDept" compareValue="All">
+				dif.departmentName = #searchByDept#
+			</isNotEqual>
+		</dynamic>
+		<dynamic prepend="AND">
+			<isNotEqual property="searchByLoc" compareValue="All">
+				dif.locationName = #searchByLoc#
+			</isNotEqual>
+		</dynamic>
+		AND TO_DATE(dif.attendanceDate, 'DD/MM/YYYY') BETWEEN 	TO_DATE('21/'|| TO_CHAR( ADD_MONTHS( TO_DATE(#period#, 'MONTH YYYY', 'nls_date_language = ENGLISH'), -1), 'MM/YYYY'), 'DD/MM/YYYY')
+		                                                AND TO_DATE('20/'|| TO_CHAR( TO_DATE(#period#, 'MONTH YYYY', 'nls_date_language = ENGLISH'), 'MM/YYYY'), 'DD/MM/YYYY')
+		GROUP BY dif.NIK, dif.employeeName, dif.departmentName, dif.locationName
+	</select>
+	
+	<insert id="doSelfInputAttendance" parameterClass="java.util.Map">
+		INSERT INTO tr_attendance
+		VALUES
+			(
+				tr_attendance_seq.nextval, 
+				#employeeId#,
+				TO_DATE(#checkIn#, 'DD/MM/YYYY HH24:MI:SS'),
+				TO_DATE(#checkOut#, 'DD/MM/YYYY HH24:MI:SS'),
+				SYSDATE,
+				<isNotEqual property="approver" compareValue="0">
+					#approver#,
+				</isNotEqual>
+				<isEqual property="approver" compareValue="0">
+					null,
+				</isEqual>
+				'1',
+				null,
+				null
+			)
+	</insert>
+	
+	<select id="getApproval" parameterClass="java.lang.String" resultClass="com.hris.attendance.model.AttendanceBean" >
+		SELECT 	attendanceId,
+				submitDate,
+				employeeName,
+				checkIn,
+				checkOut
+		FROM 	v_getApproval
+		WHERE	approvedBy = #approvedBy# 
+		AND 	approvalStatus = 'Pending'
+	</select>
+	
+	<select id="getHistory" parameterClass="java.lang.String" resultClass="com.hris.attendance.model.AttendanceBean" >
+		SELECT 	attendanceId,
+				submitDate,
+				employeeName,
+				checkIn,
+				checkOut,
+				TO_CHAR(approvalDate, 'DD Mon YYYY HH24:MI:SS', 'NLS_DATE_LANGUAGE = ENGLISH') as approvalDate,
+				approvalStatus AS status
+		FROM 	v_getApproval
+		WHERE	approvedBy = #approvedBy# 
+		AND 	(approvalStatus = 'Approved'
+		OR		approvalStatus = 'Rejected')
+		ORDER BY approvalDate DESC
+	</select>
+	
+	<update id="doApprove" parameterClass="java.util.Map">
+		UPDATE	tr_attendance
+		SET 	approval_status = #approvalStatus# ,
+				approval_date = SYSDATE ,
+				read_status = '1'
+		WHERE 	attendance_id = #attendanceId#
+	</update>
+	
+	<select id="checkInputAttendance" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		SELECT 	COUNT(1) 
+		FROM 	tr_attendance 
+		WHERE 	employee_id = #employeeId#
+		AND 	TO_CHAR(check_in, 'DD/MM/YYYY') = SUBSTR(#date#, 1, 10) 
+		AND 	(approval_status = '1' OR approval_status = '2' OR approval_status is null)
+	</select>
+</sqlMap>

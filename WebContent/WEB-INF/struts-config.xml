@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC
+       "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+       "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+       
+<struts-config>
+	<form-beans>
+		<form-bean name="attendanceForm" type="com.hris.attendance.form.AttendanceForm" />
+	</form-beans>
+	<action-mappings>
+		<action path="/attendance"
+			type="com.hris.attendance.handler.AttendanceAction"
+			scope="request"
+			name="attendanceForm">
+			<forward name="employeeList"				path="/WEB-INF/jsp/EmployeeList.jsp"></forward>
+			<forward name="viewAttendancePerEmployee"	path="/WEB-INF/jsp/ViewAttendancePerEmployee.jsp"></forward>
+			<forward name="dailyAttendance"				path="/WEB-INF/jsp/DailyAttendance.jsp"></forward>
+			<forward name="periodAttendance"			path="/WEB-INF/jsp/PeriodAttendance.jsp"></forward>
+			<forward name="selfInputAttendance"			path="/WEB-INF/jsp/SelfInputAttendance.jsp"></forward>
+			<forward name="syncDataAttendance"			path="/WEB-INF/jsp/SyncDataAttendance.jsp"></forward>
+			<forward name="approveAttendance"			path="/WEB-INF/jsp/ApproveAttendance.jsp"></forward>
+			<forward name="generateReportPerEmp"		path="/WEB-INF/jsp/GenerateReportPerEmp.jsp"></forward>
+			<forward name="generateReportDaily"			path="/WEB-INF/jsp/GenerateReportDaily.jsp"></forward>
+			<forward name="generateReportPeriod"		path="/WEB-INF/jsp/GenerateReportPeriod.jsp"></forward>
+		</action>
+	</action-mappings>
+	
+	<message-resources parameter="application"/>
+</struts-config>   

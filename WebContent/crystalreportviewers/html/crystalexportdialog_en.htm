@@ -1,0 +1,148 @@
+<HTML>
+<HEAD>
+<STYLE>
+SPAN.exportMessage {
+	FONT-SIZE: 12pt; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+SPAN.exportSelect {
+	FONT-SIZE: 10pt; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+</STYLE>
+<SCRIPT language="Javascript">
+<!--
+function check(obj) {
+	return !obj.disabled;
+}
+function toggleRangeFields(obj) {
+	if( obj.id == "radio1")	{
+		document.Export.from.disabled = true;
+		document.Export.to.disabled = true;
+	}
+	else {
+		document.Export.from.disabled = false;
+		document.Export.to.disabled = false;
+	}
+	return check(obj);
+}
+function checkDisableRange() {
+	if( document.Export.exportformat.selectedIndex == 1 || document.Export.exportformat.selectedIndex == 5 ) {
+		if( document.Export.isRange[1].checked ) {
+			document.Export.isRange[0].checked = true;
+		}
+		document.Export.isRange[1].disabled = true;
+		document.Export.from.disabled = true;
+		document.Export.to.disabled = true;
+	}
+	else {
+		document.Export.isRange[1].disabled = false;
+	}
+}
+function isValidNumber(number) {
+	var nonDigit = /\D+/;
+	if( nonDigit.test(number) || number == '0' || number == "")	{
+		return false;
+	}
+	return true;
+}
+function checkValuesAndSubmit() {
+	if( document.Export.isRange[1].checked ) {
+		if (!isValidNumber(document.Export.from.value) || !isValidNumber(document.Export.to.value) || (parseInt(document.Export.from.value, 10) > parseInt(document.Export.to.value, 10))) {
+			alert("The page range value(s) are incorrect.  Please enter a valid page range.");
+			return;
+		}
+	}
+	if( document.Export.exportformat.selectedIndex == 0 ) {
+		alert("Please select an Export format from the list.");
+		return;
+	}
+	document.Export.action = opener.document.getElementById('crystal_handler_page').value;
+	document.Export.submit();
+	document.getElementById("submitexport").disabled = true;
+}
+function init() {
+	document.getElementById('reportsource').value = opener.document.getElementById('crystal_print_rptsrc').value;
+	document.getElementById('viewstate').value = opener.document.getElementById('crystal_print_vs').value;
+}
+-->
+</SCRIPT>
+<TITLE>Export the report</TITLE>
+</HEAD>
+<BODY bottomMargin=0 topMargin=5 onLoad="init()">
+<FORM name="Export" method="POST">
+<INPUT type="hidden" name="reportsource" id="reportsource"/>
+<INPUT type="hidden" name="viewstate" id="viewstate"/>
+<TABLE cellSpacing="0" cellPadding="3" width="103%" align="center" border="0">
+<TBODY>
+<TR bgColor=#008080><TD>&nbsp;</TD></TR>
+<TR bgColor=#000000><TD>&nbsp;</TD></TR>
+<TR>
+<TD align="middle">
+<TABLE width="94%">
+<TBODY>
+<TD align="middle">
+<SPAN class=exportMessage>Please select an Export format from the list.</SPAN><BR>
+</TD>
+</TBODY>
+</TABLE>
+</TD>
+</TR>
+<TR>
+<TD class=exportSelect align=middle>
+<SELECT class=exportSelect name="exportformat" onchange="checkDisableRange()">
+<OPTION selected value="">Formats:</OPTION>
+<OPTION value="CrystalReports">Crystal Reports (RPT)</OPTION>
+<OPTION value="PDF">Acrobat Format (PDF)</OPTION>
+<OPTION value="MSWord">MS Word</OPTION>
+<OPTION value="MSExcel">MS Excel 97-2000</OPTION>
+<OPTION value="RecordToMSExcel">MS Excel 97-2000 (Data only)</OPTION>
+<OPTION value="RTF">Rich Text Format</OPTION>
+</SELECT>
+</TD>
+</TR>
+<TR>
+<TD align="middle">
+<SPAN class=exportMessage><BR>Enter the page range that you would like to Export.</SPAN>
+</TD>
+</TR>
+<TR>
+<TD>
+<TABLE>
+<TR>
+<TD><INPUT type="radio" id="radio1" name="isRange" value="all" onclick="return toggleRangeFields(this);"/></TD>
+<TD><SPAN class=exportMessage><LABEL for=radio1>All</LABEL></SPAN></TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+<TR>
+<TD>
+<TABLE>
+<TR>
+<TD><INPUT type="radio" id="radio2" checked name="isRange" value="selection" onclick="return toggleRangeFields(this);"/></TD>
+<TD><SPAN class=exportMessage><LABEL for=radio2>Pages</LABEL></SPAN></TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+<TR>
+<TD>
+<TABLE>
+<TR>
+<TD>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
+<TD><SPAN class=exportMessage><LABEL for=from>From:</LABEL></SPAN></TD>
+<TD><INPUT type="text" width="20" size="6" maxLength="6" name="from" id="from" value="1"></TD>
+<TD><SPAN class=exportMessage><LABEL for=to>To:</LABEL></SPAN></TD>
+<TD><INPUT type="text" width="20" size="6" maxLength="6" name="to" id="to" value="1"></TD>
+</TR>
+</TABLE>
+</TD>
+</TR>
+<TR>
+<BR>
+<TD align=center colspan=6><INPUT type="button" id="submitexport" width="30" value="Export" onclick="checkValuesAndSubmit();"/></TD>
+</TR>
+</TBODY>
+</TABLE>
+</FORM>
+</BODY>
+</HTML>

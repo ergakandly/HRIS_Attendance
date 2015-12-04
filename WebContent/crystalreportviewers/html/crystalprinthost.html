@@ -1,0 +1,63 @@
+<HTML>
+<HEAD>
+<SCRIPT FOR="CrystalPrintControl" EVENT="Finished(status, statusText)" LANGUAGE="Javascript">
+<!--
+window.close();
+// -->
+</SCRIPT>
+<SCRIPT LANGUAGE="Javascript">
+<!--
+function init() {
+	var args = window.dialogArguments;
+	var printControl = document.getElementById("CrystalPrintControl");
+
+	if (args.url) {
+		printControl.URL = args.url;
+	}
+	if (args.postbackdata) {
+		printControl.PostbackData = args.postbackdata;
+	}
+	if (args.title) {
+		printControl.Title = args.title;
+	}
+	if (args.maxpage) {
+		printControl.MaxPageNumber = args.maxpage;
+	}
+	if (args.paperorientation) {
+		printControl.PageOrientation = args.pageorientation;
+	}
+	if (args.papersize) {
+		printControl.PaperSize = args.papersize;
+	}
+	if (args.drivername) {
+		printControl.PrinterDriverName = args.drivername;
+	}
+	if (args.usedefprinter) {
+		printControl.UseDefaultPrinter = args.usedefprinter;
+	}
+	if (args.usedefprintersettings) {
+		printControl.UseDefaultPrinterSettings = args.usedefprintersettings;
+	}
+	if (args.sendpostdataonce) {
+		printControl.SendPostDataOnce = args.sendpostdataonce;
+	}
+	printControl.Print();
+}
+// -->
+</SCRIPT>
+</HEAD>
+<BODY onLoad="init()">
+<OBJECT ID="CrystalPrintControl" CLASSID="CLSID:CAA057EE-809B-48E4-BE9C-367C32486C0D" VIEWASTEXT>
+<PARAM NAME="URL">
+<PARAM NAME="PostbackData">
+<PARAM NAME="Title">
+<PARAM NAME="MaxPageNumber">
+<PARAM NAME="PageOrientation">
+<PARAM NAME="PaperSize">
+<PARAM NAME="PrinterDriverName">
+<PARAM NAME="UseDefaultPrinter">
+<PARAM NAME="UseDefaultPrinterSettings">
+<PARAM NAME="SendPostDataOnce">
+</OBJECT>
+</BODY>
+</HTML>

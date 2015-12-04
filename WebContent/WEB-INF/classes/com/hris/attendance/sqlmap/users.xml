@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="users">
+<!-- AUTHORIZED USER -->
+	<select id="isAuthorized" parameterClass="java.util.Map" resultClass="int">
+		SELECT
+			1
+		FROM
+			ms_user users
+		JOIN
+			ms_employee emp
+		ON
+			users.employee_id = emp.employee_id
+		WHERE
+			username = #username#
+			AND
+			password = #password#
+			AND
+			is_login = '1'
+			AND
+			status = '1'
+	</select>
+	
+<!-- UPDATE STATUS LOGIN -->
+	<update id="updateStatusLogin" parameterClass="java.util.Map">
+		UPDATE
+			ms_user
+		SET
+			is_login = #status#
+		WHERE
+			username = #username#
+	</update>
+</sqlMap>

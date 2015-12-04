@@ -1,0 +1,316 @@
+BODY 
+{
+	font-family:Arial;
+}
+
+.crpage 
+{
+	background-color:#FFFFFF;
+	color:#000000;
+}
+
+.crheader 
+{
+	background-color: #006699;
+	color: #FFFFFF;
+}
+
+.crheader A
+{
+	color:#FFFFFF;
+	cursor:hand;
+	text-decoration:none;
+}
+
+.crheader A:hover
+{
+	color:#FF0000;
+	cursor:hand;
+	text-decoration:none;
+}
+
+.crtitle
+{
+	color:#ffffff;
+	font-size:22pt;
+}
+
+.crpagepath
+{
+	background-color:#006699;
+	color:#ffffff;
+	padding-left:10;
+}
+
+.crpagepath A
+{
+	color:#FFFFFF;
+	cursor:hand;
+	text-decoration:none;
+}
+
+.crpagepath A:hover
+{
+	color:#FF0000;
+	cursor:hand;
+	text-decoration:none;
+}
+
+.crwizard
+{
+	background-color:#006699;
+	color:#FFFFFF;
+}
+
+.crwizardtoolbar
+{
+	background-color:#0073AA;
+	color:#FFFFFF;
+}
+
+.crwizardtoolbar A
+{
+	color:#FFFFFF;
+	cursor:hand;
+	text-decoration:none;
+}
+
+.crwizardtoolbar A.hover
+{
+	color:#FF0000;
+	cursor:hand;
+	text-decoration:none;
+}
+
+.crwizardformula
+{
+	background-color:#006699;
+	color:#FFFFFF;
+}
+.crwizardfields
+{
+	background-color:#006699;
+	color:#FFFFFF;
+}
+
+.crsearchresults
+{
+	background-color:#FFFFFF;
+	color:#000000;
+}
+
+.crsearchresults A
+{
+	color:#0000FF;
+	cursor:hand;
+	text-decoration:none;
+}
+
+.crsearchresults A:hover
+{
+	color:#FF00FF;
+	cursor:hand;
+	text-decoration:none;
+}
+
+.crsearchresultstitle
+{
+	background-color:#FFFFFF;
+	color:#000000;
+	font-size:14pt;
+	font-weight:bold;
+}
+
+.crsearchresultstoolbar
+{
+	background-color:#FFFFFF;
+	color:#000000;
+}
+
+.crsearchresultstoolbar A
+{
+	color:#0000FF;
+	cursor:hand;
+	text-decoration:none;
+}
+
+.crsearchresultstoolbar A:hover
+{
+	color:#FF00FF;
+	cursor:hand;
+	text-decoration:none;
+}
+
+.crcaption
+{
+	color:#000000;
+	font-size:14pt;
+}
+
+
+.crtoolbar
+{
+	background-color:#006699;
+	color:#FFFFFF;
+	font-size:12pt;
+}
+
+.crtoolbar A
+{
+	color:#FFFFFF;
+	cursor:hand;
+	text-decoration:none;
+}
+
+.crtoolbar A:hover
+{
+	color:#FF0000;
+	cursor:hand;
+	text-decoration:none;
+}
+
+.crtoptoolbar
+{
+	background-color:#0073AA;
+	color:#FFFFFF;
+}
+
+.crtoptoolbar A
+{
+	color:#FFFFFF;
+	cursor:hand;
+	text-decoration:none;
+}
+
+.crtoptoolbar A:hover
+{
+	color:#FF0000;
+	cursor:hand;
+	text-decoration:none;
+}
+
+.crcontent
+{
+	font-size:12pt;
+}
+
+
+.promptBorder   
+{
+	background-color: black;
+}
+
+.promptHeader   
+{
+      background-color: teal;
+      color: #F5F5F5;
+	font-family: verdana;
+      font-weight: bold;
+      border-width: thin;
+}
+
+.promptElement  
+{
+      background-color: #DFDFDF;
+}
+
+.promptElementText 
+{
+      color: #444444;
+      font-family: verdana;
+      font-size: 10pt;
+}
+
+.promptingText  
+{
+      color: #444444;
+      font-family: verdana;
+      font-size: 12pt;
+}
+
+.promptRuler    
+{
+      color: #444444;
+}
+
+.promptMessage
+{
+      color: #444444;
+      font-family: verdana;
+      font-weight: bold;
+      font-size: 14pt;
+}
+		    
+.promptTextBox 
+{
+      background-color: #FFFFFF;
+      border-top: thin solid;
+      border-bottom: thin solid;
+      border-left: thin solid;
+      border-right: thin solid;
+      border-color: #000000;
+      font-family: verdana;
+}
+
+.promptButton   
+{
+      border-top: thin solid;
+      border-bottom: thin solid;
+   	border-left: thin solid;
+      border-right: thin solid;
+      font-family: verdana;
+      font-size: 10pt;
+}
+
+.promptDropDown 
+{
+   	border-top: thin solid;
+      border-bottom: thin solid;
+      border-left: thin solid;
+    	border-right: thin solid;
+      font-family: verdana;
+}
+
+.promptListBox  
+{
+      border-top: thin solid;
+     	border-bottom: thin solid;
+     	border-left: thin solid;
+      border-right: thin solid;
+      font-family: verdana;
+}
+				
+.CRGridViewerTopToolbar	
+{
+	background-color:#0073AA;
+	color:#FFFFFF;
+}
+
+.CRGridViewerBottomToolbar	
+{
+	background-color:#FFFFFF;
+	color:#000000;				
+}		
+
+.CRGridViewerCaption 
+{				
+	width:140;
+	height:40;
+	background-color:silver;
+	border-width:1;
+}
+
+				
+.CRGridViewerContent  
+{							
+	width:140;
+	height:40;
+	text-align:center;
+	border-width:1;			     
+}	
+				
+				
+.CRGridViewerTable	
+{
+				
+}

@@ -1,0 +1,18 @@
+<!DOCTYPE sqlMap
+PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="accessDB">
+	<select id="syncDB" parameterClass="java.lang.String" resultClass="com.hris.attendance.model.AttendanceBean">
+		SELECT 	FingerPrintID 	AS employeeId,
+				Format(PersonalActivityDate,'dd/MM/YYYY') AS attendanceDate,
+				Min(TimeOut) AS checkIn,
+				Max(TimeOut) AS checkOut
+		FROM PersonalActivity
+		WHERE NOT(TimeOut = '')
+		AND Format(PersonalActivityDate,'MM/dd/YYYY') 	&gt;= Format('$date$','MM/dd/YYYY')
+		AND Format(PersonalActivityDate,'MM/dd/YYYY') 	&lt; Format(Date(),'MM/dd/YYYY')
+		GROUP BY FingerPrintID, PersonalActivityDate
+		ORDER BY 2, 3
+	</select>
+</sqlMap>

@@ -1,0 +1,45 @@
+<!DOCTYPE sqlMap
+PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="employee">
+	<select id="getEmployees" parameterClass="java.util.Map" resultClass="com.hris.attendance.model.AttendanceBean">
+		SELECT 	NIK, employeeId, employeeName, departmentName, locationName
+		FROM 	v_listEmployee
+		WHERE	LOWER(employeeName) LIKE LOWER('%$searchByName$%')
+		<dynamic prepend="AND">
+			<isNotEqual property="searchByDept" compareValue="All">
+				departmentId = #searchByDept#
+			</isNotEqual>
+		</dynamic>
+		<dynamic prepend="AND">
+			<isNotEqual property="searchByLoc" compareValue="All">
+				locationId = #searchByLoc#
+			</isNotEqual>
+		</dynamic>
+		ORDER BY 1
+	</select>
+	
+	<select id="getOneEmployee" resultClass="com.hris.attendance.model.AttendanceBean">
+		SELECT 	employeeName, departmentName, locationName
+		FROM 	v_listEmployee
+		WHERE 	employeeId = #employeeId#
+		ORDER BY 1
+	</select>
+	
+	<select id="getManager" resultClass="com.hris.attendance.model.AttendanceBean">
+		SELECT  managerId, managerName
+		FROM 	v_getManager
+		WHERE 	employeeId = #employeeId#
+	</select>
+	
+	<resultMap class="com.hris.attendance.model.EmployeeImage" id="result">
+		<result property="employeePhoto" column="employeePhoto" jdbcType="BLOB"/>
+	</resultMap>
+	
+	<select id="getEmployeeImage" parameterClass="java.lang.String" resultMap="result">
+		SELECT 	employeePhoto 
+		FROM	v_getEmployeePhoto
+		WHERE	employeeId = #employeeId#
+	</select>
+</sqlMap>
