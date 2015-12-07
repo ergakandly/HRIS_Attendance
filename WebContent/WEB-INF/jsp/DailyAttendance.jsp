@@ -10,9 +10,8 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
-	function flyToPage(task, id) {
+	function flyToPage(task) {
 		document.forms[0].task.value = task;
-		document.forms[0].id.value = id;
 		document.forms[0].submit();
 	}
 </script>
@@ -21,7 +20,7 @@
 	<div id="wrapper">
 		<%@include file="PartNavbar.jsp"%>
 		<div id="page-wrapper">
-			
+			<html:form action="/attendance">
 				<html:hidden name="attendanceForm" property="task" />
 				<html:hidden name="attendanceForm" property="id" />
 				<html:hidden name="attendanceForm" property="empId" />
@@ -48,7 +47,6 @@
 							<div class="col-md-12">
 								<!-- SEARCH -->
 								<div class="form-inline">
-									<html:form action="/attendance">
 									<div class="col-md-6">
 									Check-in Date :
 									<div class="input-group">
@@ -60,19 +58,18 @@
 											class="fa fa-calendar"></i></span>
 									</div>
 									<button type="button" class="btn btn-primary"
-										onclick="javascript:flyToPage('dailyAttendance','', '1');">
+										onclick="javascript:flyToPage('dailyAttendance');">
 										<i class="fa fa-search"></i> Search
 									</button>
 									</div>
-									</html:form>
 									
-									<html:form action="/attendance">
+									
+									
 									<div class="col-md-6 kanan">
 									<button type="button" class="btn btn-primary kiri" onclick="javascript:flyToPage('generateReportDaily');">
 										<i class="fa fa-file"></i> Generate Report
 									</button>
 									</div>
-									</html:form>
 								</div>
 								<hr>
 								<!-- END SEARCH -->
@@ -112,6 +109,7 @@
 						</div>
 					</div>
 				</div>
+			</html:form>
 		</div>
 	</div>
 	<%@include file="PartJavascript.jsp"%>

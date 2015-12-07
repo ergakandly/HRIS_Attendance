@@ -120,8 +120,15 @@
 															<td><bean:write name="list" property="employeeName" /></td>
 															<td><bean:write name="list" property="checkIn" /></td>
 															<td><bean:write name="list" property="checkOut" /></td>
-															<td><bean:write name="list" property="approvalDate" /></td>	
-															<td><bean:write name="list" property="status" /></td>
+															<td><bean:write name="list" property="approvalDate" /></td>																
+															<td>
+											                	<logic:equal name="list" property="status" value="Approved"> 
+											                 		<i class="fa fa-check" style="color: green;"></i> Approved
+																</logic:equal> 
+											                	<logic:equal name="list" property="status" value="Rejected"> 
+											                 		<i class="fa fa-close" style="color: red;"></i> Rejected
+											                 	</logic:equal> 
+                 											</td>               
 														</tr>
 													</logic:iterate>
 												</tbody>

@@ -406,41 +406,6 @@ public class AttendanceManager {
 	 * @param employeeId
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
-	public List<AttendanceBean> getNotification(String employeeId) {
-		List<AttendanceBean> result = null;
-		try {
-			result = ibatis.queryForList("notification.getNotification", employeeId);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return result;
-	}
-
-	/**
-	 * 
-	 * @param employeeId
-	 * @return
-	 */
-	public Integer getCountNotification(String employeeId) {
-		Integer totalNotification = null;
-		try {
-			totalNotification = (Integer) ibatis.queryForObject("notification.getCountNotification", employeeId);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return totalNotification;
-	}
-
-	/**
-	 * 
-	 * @param employeeId
-	 * @return
-	 */
 	public byte[] getImage(String employeeId) {
 		byte[] imageByte = null;
 		try {

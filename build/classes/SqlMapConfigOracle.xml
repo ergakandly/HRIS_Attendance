@@ -35,7 +35,6 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
 
 	<sqlMap resource="com/hris/attendance/sqlmap/attendance.xml" />
 	<sqlMap resource="com/hris/attendance/sqlmap/employee.xml" />
-	<sqlMap resource="com/hris/attendance/sqlmap/notification.xml" />
 	<sqlMap resource="com/hris/attendance/sqlmap/sync.xml" />
 	<sqlMap resource="com/hris/attendance/sqlmap/users.xml" />
 

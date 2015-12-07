@@ -20,7 +20,6 @@ public class AttendanceForm extends ActionForm {
 	private AttendanceBean attendanceBean = new AttendanceBean();
 	private Map syncData;
 
-	private Integer totalNotification;
 	private Integer currentSideBar = 1;
 	private Integer totalAttendance;
 	private Integer totalLate;
@@ -98,14 +97,6 @@ public class AttendanceForm extends ActionForm {
 		this.listAttendance = listAttendance;
 	}
 
-	public List<AttendanceBean> getListNotification() {
-		return listNotification;
-	}
-
-	public void setListNotification(List<AttendanceBean> listNotification) {
-		this.listNotification = listNotification;
-	}
-
 	public List<AttendanceMonthlyBean> getListAttendanceMonthly() {
 		return listAttendanceMonthly;
 	}
@@ -128,14 +119,6 @@ public class AttendanceForm extends ActionForm {
 
 	public void setSyncData(Map syncData) {
 		this.syncData = syncData;
-	}
-
-	public Integer getTotalNotification() {
-		return totalNotification;
-	}
-
-	public void setTotalNotification(Integer totalNotification) {
-		this.totalNotification = totalNotification;
 	}
 
 	public Integer getCurrentSideBar() {

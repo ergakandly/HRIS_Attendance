@@ -42,8 +42,7 @@
 									<a href="#">Dashboard</a>
 								</li>
 								<li>
-									<i class="fa fa-list"></i>
-									List Employee
+									<i class="fa fa-list"></i>List Employee
 								</li>
 							</ul>
 							<!-- END BREADCRUMB -->

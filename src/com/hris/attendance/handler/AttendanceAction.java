@@ -70,12 +70,10 @@ public class AttendanceAction extends Action {
 		session.setAttribute("username", "donny.setiawan");
 		session.setAttribute("password", "donny");
 		session.setAttribute("roleId", "2");
-		session.setAttribute("userId", "3");
-		session.setAttribute("employeeId", "3");
+		session.setAttribute("userId", "1");
+		session.setAttribute("employeeId", "1");
 		session.setAttribute("employeeName", "Donny Setiawan");
 		/////////////////////////////////
-		
-		setNotification(aForm, session.getAttribute("employeeId").toString());
 		
 		if (!"employeeList".equalsIgnoreCase(aForm.getTask())) {
 			if ("notifAction".equalsIgnoreCase(aForm.getTask())) {
@@ -85,13 +83,11 @@ public class AttendanceAction extends Action {
 				else if ("reject".equalsIgnoreCase(aForm.getAct()))
 					aManager.doApprove(aForm.getId(), "3");
 
-				setNotification(aForm, session.getAttribute("employeeId").toString());
 				aForm.setCurrentSideBar(aForm.getCurrentSideBar());
 				return null;
 				
 			}else if ("readNotif".equalsIgnoreCase(aForm.getTask())) {
-				aManager.readNotification(aForm.getEmpId());
-				setNotification(aForm, session.getAttribute("employeeId").toString());				
+				aManager.readNotification(aForm.getEmpId());			
 				
 			}else if ("viewAttendancePerEmployee".equalsIgnoreCase(aForm.getTask()) && ((session.getAttribute("roleId").toString().equals("1") || session.getAttribute("roleId").toString().equals("2")))) {
 				String period = aForm.getMonthPeriod() + " " + aForm.getYearPeriod();
@@ -156,12 +152,10 @@ public class AttendanceAction extends Action {
 				
 			} else if ("doSync".equalsIgnoreCase(aForm.getTask())) {
 				if (!aForm.getLastSync().equalsIgnoreCase(dateFormat.format(date))){
-					if(aManager.syncData(aForm.getLastSync(), session.getAttribute("employeeName").toString())){
+					if(aManager.syncData(aForm.getLastSync(), session.getAttribute("employeeName").toString()))
 						aForm.setSuccessMessage("Succesfully Sync Attendance Data");
-					}
-					else {
+					else 
 						aForm.setFailedMessage("Failed to Sync");
-					}
 				}
 				else {
 					aForm.setFailedMessage("Attendance data is up to date");
@@ -180,7 +174,6 @@ public class AttendanceAction extends Action {
 				else if ("doReject".equalsIgnoreCase(aForm.getTask())) 
 					aManager.doApprove(aForm.getId(), "3");
 					
-				setNotification(aForm, session.getAttribute("employeeId").toString());
 				aForm.setListAttendance(aManager.getApproval(session.getAttribute("employeeId").toString()));
 				aForm.setListHistory(aManager.getHistory(session.getAttribute("employeeId").toString()));
 
@@ -225,12 +218,5 @@ public class AttendanceAction extends Action {
 				aManager.getEmployees(aForm.getSearchByName(), aForm.getSearchByDept(), aForm.getSearchByLoc()));
 		aForm.setCurrentSideBar(1);
 		return mapping.findForward("employeeList");
-	}
-
-	private void setNotification(AttendanceForm aForm, String empId) {
-		AttendanceManager aManager = new AttendanceManager();
-
-		aForm.setTotalNotification(aManager.getCountNotification(empId));
-		aForm.setListNotification(aManager.getNotification(empId));
 	}
 }
