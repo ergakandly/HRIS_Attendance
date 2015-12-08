@@ -12,6 +12,10 @@
 <script type="text/javascript">
 	function flyToPage(task) {
 		document.forms[0].task.value = task;
+		if(task != "generateReportDaily")
+			document.forms[0].target = "";
+		else
+			document.forms[0].target = "_blank";
 		document.forms[0].submit();
 	}
 </script>
@@ -70,6 +74,7 @@
 									<button type="button" class="btn btn-primary kiri" onclick="javascript:flyToPage('generateReportDaily');">
 										<i class="fa fa-file"></i> Generate Report
 									</button>
+									
 									</div>
 								</div>
 								<hr>

@@ -15,6 +15,10 @@
 	function flyToPage(task, empId) {
 		document.forms[0].task.value = task;
 		document.forms[0].empId.value = empId;
+		if(task != "generateReportPerEmp")
+			document.forms[0].target = "";
+		else
+			document.forms[0].target = "_blank";
 		document.forms[0].submit();
 	}
 </script>

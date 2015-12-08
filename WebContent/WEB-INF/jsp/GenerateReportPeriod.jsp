@@ -28,7 +28,7 @@
 //Reports can be opened from the relative location specified in the CRConfig.xml, or the report location
 //tag can be removed to open the reports as Java resources or using an absolute path (absolute path not recommended
 //for Web applications).
-final String REPORT_NAME = "ERGA2.rpt";
+final String REPORT_NAME = "AttendancePeriod.rpt";
 final String EXPORT_FILE = "Exported_Attendance_Period_Dept.pdf";
 %>
 

@@ -26,7 +26,8 @@ String disableCache = "rassdk://";
 String path = "C:\\Program Files (x86)\\Crystal Decisions\\Report Application Server 9\\Reports\\";
 /*********** TESTING *************/
 // Should be using XML config file: clientSDKOptions.xml.
-String rasHostName = "014ACE0815";
+// String rasHostName = "014ACE0815";
+String rasHostName = "192.168.10.16";
 String dbUser = "ace_hr";
 String dbPassword = "ace";
 
