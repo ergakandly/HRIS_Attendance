@@ -98,7 +98,8 @@
 	<div class="collapse navbar-collapse navbar-ex1-collapse">
 		<ul class="nav navbar-nav side-nav">
 			<!-- SIDEBAR 1 -->
-			<%if(session.getAttribute("roleId").toString().equals("1") || session.getAttribute("roleId").toString().equals("2")){ %>
+			<%if(session.getAttribute("roleId").toString().equals("1")
+				|| session.getAttribute("roleId").toString().equals("3")){ %>
 			<logic:equal name="attendanceForm" property="currentSideBar" value="1">
 				<li class="active" style="cursor: pointer;">
 					<a href="#">
@@ -133,7 +134,8 @@
 			<% }%>
 			
 			<!-- SIDEBAR 2 -->
-			<%if(session.getAttribute("roleId").toString().equals("1") || session.getAttribute("roleId").toString().equals("2")){ %>
+			<%if(session.getAttribute("roleId").toString().equals("1")
+				|| session.getAttribute("roleId").toString().equals("3")){ %>
 			<logic:equal name="attendanceForm" property="currentSideBar" value="2">
 				<li class="active" style="cursor: pointer;">
 					<a href="#">
@@ -209,7 +211,8 @@
 			</logic:notEqual>
 			
 			<!-- SIDEBAR 6 -->
-			<%if(session.getAttribute("roleId").toString().equals("1") || session.getAttribute("roleId").toString().equals("2")){ %>
+			<%if(session.getAttribute("roleId").toString().equals("1")
+				|| session.getAttribute("roleId").toString().equals("3")){ %>
 			<logic:equal name="attendanceForm" property="currentSideBar" value="6">
 				<li class="active">
 					<a href="#">
