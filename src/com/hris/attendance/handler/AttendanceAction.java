@@ -66,17 +66,7 @@ public class AttendanceAction extends Action {
 		}
 		aForm.setUrlPortal(aManager.getPortalUrl());
 		request.setAttribute("zx", "?zx="+AttendanceUtil.createParameter(session));
-		
-		/*////////TES DOANG////////////////
-		HttpSession session = request.getSession();
-		session.setAttribute("username", "donny.setiawan");
-		session.setAttribute("password", "donny");
-		session.setAttribute("roleId", "2");
-		session.setAttribute("userId", "1");
-		session.setAttribute("employeeId", "1");
-		session.setAttribute("employeeName", "Donny Setiawan");
-		/////////////////////////////////
-*/		
+
 		if (!"employeeList".equalsIgnoreCase(aForm.getTask())) {
 			if ("notifAction".equalsIgnoreCase(aForm.getTask())) {
 				

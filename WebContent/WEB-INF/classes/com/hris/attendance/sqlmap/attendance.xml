@@ -100,9 +100,11 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 				SYSDATE,
 				<isNotEqual property="approver" compareValue="0">
 					#approver#,
+					'1',
 				</isNotEqual>
 				<isEqual property="approver" compareValue="0">
 					null,
+					'2',
 				</isEqual>
 				'1',
 				null

@@ -29,6 +29,10 @@ public class AttendanceManager {
 
 		try {
 			bean = (AttendanceBean) ibatis.queryForObject("employee.getManager", employeeId);
+			if(bean.getManagerId() == null && bean.getManagerName() == null){
+				bean.setManagerId(0);
+				bean.setManagerName("");
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception ex) {
