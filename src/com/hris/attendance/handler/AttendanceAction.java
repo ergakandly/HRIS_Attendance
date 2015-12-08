@@ -32,40 +32,41 @@ public class AttendanceAction extends Action {
 		DateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 		Date date = new Date();
 		
-//		HttpSession session = request.getSession(false);
-//		String param = null;
-//		//check session jika ada parameter yang diterima
-//		if (null!=request.getParameter("zx") && AttendanceUtil.isBase64(request.getParameter("zx").replace(' ', '+'))) {
-//			//parameter diterima
-//			System.out.println("ATTENDANCE Check session dari parameter.");
-//			param = request.getParameter("zx").replace(' ', '+');
-//			String user[] = AttendanceUtil.decrypt(param).split("##");
-//			
-//			// cek apakah memang data memiliki hak akses
-//			if (aManager.isAuthorized(user[0], user[1])) {
-//				//parameter yang akan dikirim
-//				System.out.println("ATTENDANCE param dikirim: "+ param);
-//				request.setAttribute("zx", param);
-//				parameter = param;
-//				
-//				System.out.println("ATTENDANCE Set session "+user[0]+".");
-//				session.setAttribute("username", user[0]);
-//				session.setAttribute("password", user[1]);
-//				session.setAttribute("roleId", user[2]);
-//				session.setAttribute("userId", user[3]);
-//				session.setAttribute("employeeId", user[4]);
-//				session.setAttribute("employeeName", user[5]);
-//			}
-//			else {
-//				// hancurkan session karena username dan password tidak pernah ada
-//				System.out.println("ATTENDANCE "+session.getAttribute("username")+" tidak terautorisasi. Session dihancurkan.");
-//				if (null != session)
-//					session.invalidate();
-//			}	
-//		}
-//		aForm.setParameter(parameter);
+		HttpSession session = request.getSession(false);
+		//check session jika ada parameter yang diterima
+		if (null!=request.getParameter("zx") && AttendanceUtil.isBase64(request.getParameter("zx").replace(' ', '+'))) {
+			//parameter diterima
+			System.out.println("ATTENDANCE Check session dari parameter.");
+			String param = request.getParameter("zx").replace(' ', '+');
+			String user[] = AttendanceUtil.decrypt(param).split("##");
+			
+			// cek apakah memang data memiliki hak akses
+			if (aManager.isAuthorized(user[0], user[1])) {
+				//parameter yang akan dikirim
+				System.out.println("ATTENDANCE param dikirim: "+ param);
+				request.setAttribute("zx", param);
+				
+				System.out.println("ATTENDANCE Set session "+user[0]+".");
+				session.setAttribute("username", user[0]);
+				session.setAttribute("password", user[1]);
+				session.setAttribute("roleId", user[2]);
+				session.setAttribute("userId", user[3]);
+				session.setAttribute("employeeId", user[4]);
+				session.setAttribute("employeeName", user[5]);
+			}
+			else {
+				// hancurkan session karena username dan password tidak pernah ada
+				System.out.println("ATTENDANCE "+session.getAttribute("username")+" tidak terautorisasi. Session dihancurkan.");
+				if (null != session)
+					session.invalidate();
+				response.sendRedirect(aManager.getPortalUrl());
+				return null;
+			}	
+		}
+		aForm.setUrlPortal(aManager.getPortalUrl());
+		request.setAttribute("zx", "?zx="+AttendanceUtil.createParameter(session));
 		
-		////////TES DOANG////////////////
+		/*////////TES DOANG////////////////
 		HttpSession session = request.getSession();
 		session.setAttribute("username", "donny.setiawan");
 		session.setAttribute("password", "donny");
@@ -74,7 +75,7 @@ public class AttendanceAction extends Action {
 		session.setAttribute("employeeId", "1");
 		session.setAttribute("employeeName", "Donny Setiawan");
 		/////////////////////////////////
-		
+*/		
 		if (!"employeeList".equalsIgnoreCase(aForm.getTask())) {
 			if ("notifAction".equalsIgnoreCase(aForm.getTask())) {
 				
@@ -198,6 +199,10 @@ public class AttendanceAction extends Action {
 				aManager.updateStatusLogin(session.getAttribute("username").toString(), 0);
 				if(session != null)
 		    		session.invalidate();
+				
+				System.out.println("ATTENDANCE menuju PORTAL");
+				response.sendRedirect(aManager.getPortalUrl());
+				return null;
 			}
 		}
 		

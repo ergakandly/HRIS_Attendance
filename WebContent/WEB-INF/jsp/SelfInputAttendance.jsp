@@ -36,7 +36,7 @@
 							<!-- BREADCRUMB -->
 							<ul class="breadcrumb">
 								<li><i class="fa fa-dashboard"></i> <a
-									href="javascript:flyToPage('success');"> Dashboard</a></li>
+									href="<bean:write name="attendanceForm" property="urlPortal"/><%= request.getAttribute("zx") %>"> Dashboard</a></li>
 								<li><i class="fa fa-calendar-plus-o"></i> Self Input
 									Attendance</li>
 							</ul>

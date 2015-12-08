@@ -43,7 +43,7 @@ public class AttendanceForm extends ActionForm {
 	private String empId;
 	private String failedMessage;
 	private String successMessage;
-	private String parameter;
+	private String urlPortal;
 	
 	public AttendanceForm() {
 		Date dNow = new Date();
@@ -56,13 +56,20 @@ public class AttendanceForm extends ActionForm {
 		this.searchByDate = date.format(dNow);
 	}
 
-	
-	public String getParameter() {
-		return parameter;
+	public List<AttendanceBean> getListNotification() {
+		return listNotification;
 	}
 
-	public void setParameter(String parameter) {
-		this.parameter = parameter;
+	public void setListNotification(List<AttendanceBean> listNotification) {
+		this.listNotification = listNotification;
+	}
+
+	public String getUrlPortal() {
+		return urlPortal;
+	}
+
+	public void setUrlPortal(String urlPortal) {
+		this.urlPortal = urlPortal;
 	}
 
 	public String getFailedMessage() {

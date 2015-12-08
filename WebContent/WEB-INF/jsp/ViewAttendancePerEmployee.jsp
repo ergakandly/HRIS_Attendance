@@ -43,7 +43,7 @@
 							<ul class="breadcrumb">
 								<li>
 									<span class="fa fa-dashboard"></span>
-									<a href="#"> Dashboard</a>
+									<a href="<bean:write name="attendanceForm" property="urlPortal"/><%= request.getAttribute("zx") %>"> Dashboard</a>
 								</li>
 								<li>
 									<span class="fa fa-list"></span>

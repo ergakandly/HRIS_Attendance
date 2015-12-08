@@ -38,7 +38,8 @@
 
 							<!-- BREADCRUMB -->
 							<ul class="breadcrumb">
-								<li><i class="fa fa-dashboard"></i> <a href="#">Dashboard</a>
+								<li><i class="fa fa-dashboard"></i>
+								<a href="<bean:write name="attendanceForm" property="urlPortal"/><%= request.getAttribute("zx") %>">Dashboard</a>
 								</li>
 								<li><i class="fa fa-check"></i> Approve Attendance</li>
 							</ul>

@@ -6,6 +6,7 @@ import java.util.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
+import javax.servlet.http.HttpSession;
 
 public class AttendanceUtil {
 	private static String key = "hrIS0987HRis4321";
@@ -68,4 +69,12 @@ public class AttendanceUtil {
 			return true;
 		return false;
 	}
+
+	public static String createParameter(HttpSession session) {
+		String parameter = session.getAttribute("username")+"##"+session.getAttribute("password")+"##"+session.getAttribute("roleId")+"##"+
+						   session.getAttribute("userId")+"##"+session.getAttribute("employeeId")+"##"+session.getAttribute("employeeName");
+		
+		return encrypt(parameter);
+	}
+	
 }

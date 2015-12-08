@@ -40,7 +40,7 @@
 							<!-- BREADCRUMB -->
 							<ul class="breadcrumb">
 								<li><i class="fa fa-dashboard"></i> <a
-									href="javascript:flyToPage('success');"> Dashboard</a></li>
+									href="<bean:write name="attendanceForm" property="urlPortal"/><%= request.getAttribute("zx") %>"> Dashboard</a></li>
 								<li><i class="fa fa-calendar"></i> Attendance Period</li>
 							</ul>
 							<!-- END BREADCRUMB -->
