@@ -59,6 +59,7 @@ public class AttendanceAction extends Action {
 				System.out.println("ATTENDANCE "+session.getAttribute("username")+" tidak terautorisasi. Session dihancurkan.");
 				if (null != session)
 					session.invalidate();
+				
 				response.sendRedirect(aManager.getPortalUrl());
 				return null;
 			}	
@@ -197,6 +198,8 @@ public class AttendanceAction extends Action {
 			} else if ("logout".equalsIgnoreCase(aForm.getTask())) {
 				session = request.getSession(false);
 				aManager.updateStatusLogin(session.getAttribute("username").toString(), 0);
+				System.out.println("ATTENDANCE "+session.getAttribute("username")+" logout.");
+				
 				if(session != null)
 		    		session.invalidate();
 				
