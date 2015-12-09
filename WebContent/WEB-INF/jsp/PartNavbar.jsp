@@ -81,12 +81,6 @@
 				<b class="caret" id="warnaPutih"></b>
 			</a>
 			<ul class="dropdown-menu">
-				<li>
-					<a href="" data-toggle="modal" data-target="#modalLogin">
-						<i class=" fa fa-lock"></i> User Password
-					</a>
-				</li>
-				<li class="divider"></li>
 				<li><a href="javascript:flyToPage('logout');">
 					<span class="glyphicon glyphicon-log-out"></span> Log Out
 				</a></li>
@@ -236,63 +230,5 @@
 
 	</nav>
 	<!-- END NAVBAR -->
-
-	<!-- MODAL CHANGE PASSWORD-->
-	<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">User Profile</h4>
-				</div>
-				<div class="modal-body ">
-
-					<!-- PANEL PASSWORD-->
-					<div class="panel panel-info ">
-						<div class="panel-heading">
-							<h5 class="panel-title">
-								<span class="glyphicon glyphicon-lock"></span>
-								Change Password
-							</h5>
-						</div>
-						<div class="panel-body">
-							<table align="center" class="table table-nonfluid table-hover ">
-								<tr>
-									<td class="kanan fontBold">Old Password:</td>
-									<td>
-										<html:password name="attendanceForm" styleClass="form-control" property="oldPassword" />
-									</td>
-								</tr>
-								<tr>
-									<td class="kanan fontBold">New Password :</td>
-									<td>
-										<html:password name="attendanceForm" styleClass="form-control" property="newPassword" />
-									</td>
-								</tr>
-								<tr>
-									<td class="kanan fontBold">Retype New Password :</td>
-									<td>
-										<html:password name="attendanceForm" styleClass="form-control" property="confirmPassword" />
-									</td>
-								</tr>
-							</table>
-						</div>
-					</div>
-					<!-- PANEL -->
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary">
-						<i class="fa fa-check"></i> Save Changes
-					</button>
-					<button type="button" class="btn btn-danger" data-dismiss="modal">
-						<i class="fa fa-close"></i> Close
-					</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- END MODAL CHANGE PASSWORD-->
 </body>
 </html>

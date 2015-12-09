@@ -23,8 +23,8 @@
 	<script type="text/javascript" src="asset/js/iconpicker/iconset-fontawesome-4.1.0.js"></script>
 	
 	<!-- DATATABLE TABLESORT -->
-<!-- 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script> -->
-<!-- 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script> -->
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
 	
 	<!-- Date Time Picker --> 
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script> 
