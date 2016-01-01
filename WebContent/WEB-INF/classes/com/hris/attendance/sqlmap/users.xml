@@ -33,4 +33,13 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 		WHERE
 			username = #username#
 	</update>
+	
+	<select id = "getPortalUrl" resultClass="java.lang.String">
+		SELECT
+			url_menu
+		FROM
+		    ms_menu
+		WHERE
+			menu = 'Portal'
+	</select>
 </sqlMap>

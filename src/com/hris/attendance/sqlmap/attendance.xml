@@ -54,17 +54,6 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 		SELECT 	NIK, employeeName, departmentName, locationName, checkIn, checkOut, workingHours, status
 		FROM 	v_detailAttendance
 		WHERE 	TO_DATE(attendanceDate, 'DD/MM/YYYY') = TO_DATE(#searchByDate#, 'DD/MM/YYYY')
-		AND 	LOWER(employeeName) LIKE LOWER('%$searchByName$%')
-		<dynamic prepend="AND">
-			<isNotEqual property="searchByDept" compareValue="All">
-				departmentId = #searchByDept#
-			</isNotEqual>
-		</dynamic>
-		<dynamic prepend="AND">
-			<isNotEqual property="searchByLoc" compareValue="All">
-				locationId = #searchByLoc#
-			</isNotEqual>
-		</dynamic>
 		ORDER BY 1
 	</select>
 	
@@ -95,16 +84,6 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 		    ) late
 		    ON dif.attendanceId = late.attendanceId
 		WHERE LOWER(dif.employeeName) LIKE LOWER('%$searchByName$%')
-		<dynamic prepend="AND">
-			<isNotEqual property="searchByDept" compareValue="All">
-				dif.departmentName = #searchByDept#
-			</isNotEqual>
-		</dynamic>
-		<dynamic prepend="AND">
-			<isNotEqual property="searchByLoc" compareValue="All">
-				dif.locationName = #searchByLoc#
-			</isNotEqual>
-		</dynamic>
 		AND TO_DATE(dif.attendanceDate, 'DD/MM/YYYY') BETWEEN 	TO_DATE('21/'|| TO_CHAR( ADD_MONTHS( TO_DATE(#period#, 'MONTH YYYY', 'nls_date_language = ENGLISH'), -1), 'MM/YYYY'), 'DD/MM/YYYY')
 		                                                AND TO_DATE('20/'|| TO_CHAR( TO_DATE(#period#, 'MONTH YYYY', 'nls_date_language = ENGLISH'), 'MM/YYYY'), 'DD/MM/YYYY')
 		GROUP BY dif.NIK, dif.employeeName, dif.departmentName, dif.locationName

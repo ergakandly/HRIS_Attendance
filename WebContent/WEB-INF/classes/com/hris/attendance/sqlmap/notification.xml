@@ -18,7 +18,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 			    FROM(
 			        SELECT *
 			        FROM v_getApproval
-			        WHERE approvedBy = #empId#
+			        WHERE approvedBy = #employeeId#
 			        AND approvalStatus = 'Pending'
 			            UNION
 			        SELECT *
@@ -33,12 +33,12 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 			FROM(
 			    SELECT *
 			    FROM v_getApproval
-			    WHERE approvedBy = #empId#
+			    WHERE approvedBy = #employeeId#
 			    AND approvalStatus = 'Pending'
 			        UNION
 			    SELECT *
 			    FROM v_recentlyApproved
-			    WHERE userId = #empId#
+			    WHERE userId = #employeeId#
 			)
 	</select>
 	

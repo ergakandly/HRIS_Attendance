@@ -32,47 +32,47 @@ public class AttendanceAction extends Action {
 		DateFormat dateTimeFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 		Date date = new Date();
 		
-		HttpSession session = request.getSession(false);
-		String param = null;
-		//check session jika ada parameter yang diterima
-		if (null!=request.getParameter("zx") && AttendanceUtil.isBase64(request.getParameter("zx").replace(' ', '+'))) {
-			//parameter diterima
-			System.out.println("ATTENDANCE Check session dari parameter.");
-			param = request.getParameter("zx").replace(' ', '+');
-			String user[] = AttendanceUtil.decrypt(param).split("##");
-			
-			// cek apakah memang data memiliki hak akses
-			if (aManager.isAuthorized(user[0], user[1])) {
-				//parameter yang akan dikirim
-				System.out.println("ATTENDANCE param dikirim: "+ param);
-				request.setAttribute("zx", param);
-				parameter = param;
-				
-				System.out.println("ATTENDANCE Set session "+user[0]+".");
-				session.setAttribute("username", user[0]);
-				session.setAttribute("password", user[1]);
-				session.setAttribute("roleId", user[2]);
-				session.setAttribute("userId", user[3]);
-				session.setAttribute("employeeId", user[4]);
-				session.setAttribute("employeeName", user[5]);
-			}
-			else {
-				// hancurkan session karena username dan password tidak pernah ada
-				System.out.println("ATTENDANCE "+session.getAttribute("username")+" tidak terautorisasi. Session dihancurkan.");
-				if (null != session)
-					session.invalidate();
-			}	
-		}
-		aForm.setParameter(parameter);
+//		HttpSession session = request.getSession(false);
+//		String param = null;
+//		//check session jika ada parameter yang diterima
+//		if (null!=request.getParameter("zx") && AttendanceUtil.isBase64(request.getParameter("zx").replace(' ', '+'))) {
+//			//parameter diterima
+//			System.out.println("ATTENDANCE Check session dari parameter.");
+//			param = request.getParameter("zx").replace(' ', '+');
+//			String user[] = AttendanceUtil.decrypt(param).split("##");
+//			
+//			// cek apakah memang data memiliki hak akses
+//			if (aManager.isAuthorized(user[0], user[1])) {
+//				//parameter yang akan dikirim
+//				System.out.println("ATTENDANCE param dikirim: "+ param);
+//				request.setAttribute("zx", param);
+//				parameter = param;
+//				
+//				System.out.println("ATTENDANCE Set session "+user[0]+".");
+//				session.setAttribute("username", user[0]);
+//				session.setAttribute("password", user[1]);
+//				session.setAttribute("roleId", user[2]);
+//				session.setAttribute("userId", user[3]);
+//				session.setAttribute("employeeId", user[4]);
+//				session.setAttribute("employeeName", user[5]);
+//			}
+//			else {
+//				// hancurkan session karena username dan password tidak pernah ada
+//				System.out.println("ATTENDANCE "+session.getAttribute("username")+" tidak terautorisasi. Session dihancurkan.");
+//				if (null != session)
+//					session.invalidate();
+//			}	
+//		}
+//		aForm.setParameter(parameter);
 		
 		////////TES DOANG////////////////
-		/*HttpSession session = request.getSession();
+		HttpSession session = request.getSession();
 		session.setAttribute("username", "donny.setiawan");
 		session.setAttribute("password", "donny");
 		session.setAttribute("roleId", "2");
-		session.setAttribute("userId", "2");
-		session.setAttribute("employeeId", "2");
-		session.setAttribute("employeeName", "Donny Setiawan");*/
+		session.setAttribute("userId", "3");
+		session.setAttribute("employeeId", "3");
+		session.setAttribute("employeeName", "Donny Setiawan");
 		/////////////////////////////////
 		
 		setNotification(aForm, session.getAttribute("employeeId").toString());
@@ -156,8 +156,12 @@ public class AttendanceAction extends Action {
 				
 			} else if ("doSync".equalsIgnoreCase(aForm.getTask())) {
 				if (!aForm.getLastSync().equalsIgnoreCase(dateFormat.format(date))){
-					aManager.syncData(aForm.getLastSync(), session.getAttribute("employeeName").toString());
-					aForm.setSuccessMessage("Succesfully Sync Attendance Data");
+					if(aManager.syncData(aForm.getLastSync(), session.getAttribute("employeeName").toString())){
+						aForm.setSuccessMessage("Succesfully Sync Attendance Data");
+					}
+					else {
+						aForm.setFailedMessage("Failed to Sync");
+					}
 				}
 				else {
 					aForm.setFailedMessage("Attendance data is up to date");

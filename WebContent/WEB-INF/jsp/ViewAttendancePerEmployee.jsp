@@ -159,7 +159,14 @@
 											<td><bean:write name="list" property="checkIn" /></td>
 											<td><bean:write name="list" property="checkOut" /></td>
 											<td class="tengah"><bean:write name="list" property="workingHours" /></td>
-											<td class="tengah"><bean:write name="list" property="status" /></td>
+											<td class="tengah">
+												<logic:equal name="list" property="status" value="Late">
+													<span style="color: red;"><bean:write name="list" property="status" /></span>
+												</logic:equal>
+												<logic:notEqual name="list" property="status" value="Late">
+													<bean:write name="list" property="status" />
+												</logic:notEqual>
+											</td>
 										</tr>
 									</logic:iterate>
 								</table>

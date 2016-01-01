@@ -7,16 +7,6 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
 		SELECT 	NIK, employeeId, employeeName, departmentName, locationName
 		FROM 	v_listEmployee
 		WHERE	LOWER(employeeName) LIKE LOWER('%$searchByName$%')
-		<dynamic prepend="AND">
-			<isNotEqual property="searchByDept" compareValue="All">
-				departmentId = #searchByDept#
-			</isNotEqual>
-		</dynamic>
-		<dynamic prepend="AND">
-			<isNotEqual property="searchByLoc" compareValue="All">
-				locationId = #searchByLoc#
-			</isNotEqual>
-		</dynamic>
 		ORDER BY 1
 	</select>
 	

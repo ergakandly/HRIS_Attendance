@@ -21,7 +21,7 @@
 	<div id="wrapper">
 		<%@include file="PartNavbar.jsp"%>
 		<div id="page-wrapper">
-			<html:form action="/attendance">
+			
 				<html:hidden name="attendanceForm" property="task" />
 				<html:hidden name="attendanceForm" property="id" />
 				<html:hidden name="attendanceForm" property="empId" />
@@ -48,11 +48,13 @@
 							<div class="col-md-12">
 								<!-- SEARCH -->
 								<div class="form-inline">
+									<html:form action="/attendance">
 									<div class="col-md-6">
 									Check-in Date :
 									<div class="input-group">
-										<input class="form-control" name="searchByDate" type="text"
-											id="cariTanggal" readonly="readonly" /> <span
+										<input class="form-control" name="searchByDate" type="text" value="<bean:write name="attendanceForm" property="searchByDate" />"
+											id="cariTanggal" readonly="readonly" />
+											<span
 											class="input-group-addon" id="basic-addon1"
 											style="height: 22px !important; padding-top: 0; padding-bottom: 0; border-bottom-right-radius: 15px;"><i
 											class="fa fa-calendar"></i></span>
@@ -62,12 +64,15 @@
 										<i class="fa fa-search"></i> Search
 									</button>
 									</div>
+									</html:form>
 									
+									<html:form action="/attendance">
 									<div class="col-md-6 kanan">
 									<button type="button" class="btn btn-primary kiri" onclick="javascript:flyToPage('generateReportDaily');">
 										<i class="fa fa-file"></i> Generate Report
 									</button>
 									</div>
+									</html:form>
 								</div>
 								<hr>
 								<!-- END SEARCH -->
@@ -107,73 +112,6 @@
 						</div>
 					</div>
 				</div>
-
-<!-- 				MODAL GENERATE -->
-<!-- 				<div class="modal fade" id="modalGenerete" tabindex="-1" -->
-<!-- 					role="dialog" aria-labelledby="#deactivateModalLabel"> -->
-<!-- 					<div class="modal-dialog" role="document"> -->
-<!-- 						<div class="modal-content"> -->
-<!-- 							<div class="modal-header"> -->
-<!-- 								<button type="button" class="close" data-dismiss="modal" -->
-<!-- 									aria-label="Close"> -->
-<!-- 									<span aria-hidden="true">&times;</span> -->
-<!-- 								</button> -->
-<!-- 								<h4 class="modal-title" id="myModalLabel">Generete Report</h4> -->
-<!-- 							</div> -->
-<!-- 							<div class="modal-body"> -->
-<!-- 								<table> -->
-<!-- 									<tr> -->
-<!-- 										<td class="kanan">Select Date :</td> -->
-<!-- 										<td> -->
-										
-<!-- 											<div class="input-group"> -->
-<!-- 											<input class="form-control" name="searchByDate" type="text" -->
-<!-- 												id="cariTanggal" readonly="readonly" /> <span -->
-<!-- 												class="input-group-addon" id="basic-addon1" -->
-<!-- 												style="height: 22px !important; padding-top: 0; padding-bottom: 0; border-bottom-right-radius: 15px;"><i -->
-<!-- 												class="fa fa-calendar"></i></span> -->
-<!-- 											</div> -->
-										
-<!-- 										</td> -->
-<!-- 									</tr> -->
-<!-- 									<tr> -->
-<!-- 										<td>Group by (Department/Location):</td> -->
-<!-- 										<td> -->
-<!-- 											<select id="groupBy" name="a"> -->
-<!-- 												<option value="department">Department</option> -->
-<!-- 												<option value="location">Location</option> -->
-<!-- 											</select> -->
-<!-- 										</td> -->
-<!-- 									</tr> -->
-<!-- 									<tr> -->
-<!-- 										<td>AAAAAAAAAAAAAAAAAAAA:</td> -->
-<!-- 										<td> -->
-<!-- 											<select id="groupByValue" name="b"> -->
-<%-- 												<logic:iterate id="list" name="attendanceForm" property="listDepartment"> --%>
-<%-- 													<option value="<bean:write name="list" property="DEPARTMENTID"/>"> --%>
-<%-- 														<bean:write name="list" property="DEPARTMENTNAME"/>  --%>
-<!-- 													</option> -->
-<%-- 												</logic:iterate> --%>
-<!-- 											</select> -->
-<!-- 										</td> -->
-<!-- 									</tr> -->
-<!-- 								</table> -->
-<!-- 							</div> -->
-<!-- 							<div class="modal-footer"> -->
-<!-- 								<button type="submit" class="btn btn-primary" id="info" > -->
-<!-- 									<i class="fa fa-check"></i>Submit -->
-<!-- 								</button> -->
-<!-- 								<button type="button" class="btn btn-danger" -->
-<!-- 									data-dismiss="modal"> -->
-<!-- 									<i class="fa fa-close"></i>Close -->
-<!-- 								</button> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				END MODAL GENERATE -->
-			</html:form>
 		</div>
 	</div>
 	<%@include file="PartJavascript.jsp"%>

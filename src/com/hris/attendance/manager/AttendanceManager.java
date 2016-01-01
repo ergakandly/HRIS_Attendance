@@ -24,38 +24,6 @@ public class AttendanceManager {
 		ibatisAccess = IbatisHelperAccess.getSqlMapInstance();
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public List<Map> getDepartment() {
-		List<Map> result = null;
-
-		try {
-			result = ibatis.queryForList("department.getDepartment", "");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public List<Map> getLocation() {
-		List<Map> result = null;
-
-		try {
-			result = ibatis.queryForList("location.getLocation", "");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-
 	public AttendanceBean getManager(String employeeId) {
 		AttendanceBean bean = new AttendanceBean();
 
@@ -63,6 +31,8 @@ public class AttendanceManager {
 			bean = (AttendanceBean) ibatis.queryForObject("employee.getManager", employeeId);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 		return bean;
 	}
@@ -87,6 +57,8 @@ public class AttendanceManager {
 			list = ibatis.queryForList("employee.getEmployees", parameter);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 		return list;
 	}
@@ -102,6 +74,8 @@ public class AttendanceManager {
 			bean = (AttendanceBean) ibatis.queryForObject("employee.getOneEmployee", employeeId);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 		return bean;
 	}
@@ -124,6 +98,8 @@ public class AttendanceManager {
 			list = ibatis.queryForList("attendance.getDetailAttendance", parameter);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 		return list;
 	}
@@ -145,6 +121,8 @@ public class AttendanceManager {
 			totalAttendance = (Integer) ibatis.queryForObject("attendance.getTotalAttendance", parameter);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 		return totalAttendance;
 	}
@@ -166,11 +144,15 @@ public class AttendanceManager {
 			totalLate = (Integer) ibatis.queryForObject("attendance.getTotalLate", parameter);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		} finally {
 			try {
 				ibatis.endTransaction();
 			} catch (SQLException e) {
 				e.printStackTrace();
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
 		}
 		return totalLate;
@@ -193,6 +175,8 @@ public class AttendanceManager {
 			totalWorkingTime = (String) ibatis.queryForObject("attendance.getTotalWorkingTime", parameter);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 		return totalWorkingTime;
 	}
@@ -219,6 +203,8 @@ public class AttendanceManager {
 			list = ibatis.queryForList("attendance.getAllAttendanceDaily", parameter);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 		return list;
 	}
@@ -245,6 +231,8 @@ public class AttendanceManager {
 			list = ibatis.queryForList("attendance.getAllAttendancePeriod", parameter);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 		return list;
 	}
@@ -270,11 +258,15 @@ public class AttendanceManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			flag = false;
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		} finally {
 			try {
 				ibatis.endTransaction();
 			} catch (SQLException e) {
 				e.printStackTrace();
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
 		}
 		return flag;
@@ -291,6 +283,8 @@ public class AttendanceManager {
 			result = (Map<?, ?>) ibatis.queryForObject("sync.getLastSync", "");
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 
 		return result;
@@ -302,7 +296,8 @@ public class AttendanceManager {
 	 * @param username
 	 */
 	@SuppressWarnings("unchecked")
-	public void syncData(String date, String username) {
+	public boolean syncData(String date, String username) {
+		boolean flag = true;
 		List<AttendanceBean> result = null;
 		String[] dateArray = date.split("/");
 		date = dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2];
@@ -319,6 +314,8 @@ public class AttendanceManager {
 					ibatis.insert("sync.syncInsert", parameter);
 				} catch (SQLException e) {
 					e.printStackTrace();
+				} catch (Exception ex) {
+					ex.printStackTrace();
 				}
 			}
 			ibatis.insert("sync.syncLog", username);
@@ -326,13 +323,19 @@ public class AttendanceManager {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+			flag = false;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			flag = false;
 		} finally {
 			try {
 				ibatis.endTransaction();
 			} catch (SQLException e) {
 				e.printStackTrace();
+				flag = false;
 			}
 		}
+		return flag;
 	}
 
 	/**
@@ -348,6 +351,8 @@ public class AttendanceManager {
 			list = ibatis.queryForList("attendance.getApproval", approvedBy);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 		return list;
 	}
@@ -364,6 +369,8 @@ public class AttendanceManager {
 			list = ibatis.queryForList("attendance.getHistory", approvedBy);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 		return list;
 	}
@@ -383,6 +390,8 @@ public class AttendanceManager {
 			ibatis.commitTransaction();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		} finally {
 			try {
 				ibatis.endTransaction();
@@ -404,6 +413,8 @@ public class AttendanceManager {
 			result = ibatis.queryForList("notification.getNotification", employeeId);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 		return result;
 	}
@@ -419,6 +430,8 @@ public class AttendanceManager {
 			totalNotification = (Integer) ibatis.queryForObject("notification.getCountNotification", employeeId);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 		return totalNotification;
 	}
@@ -435,6 +448,8 @@ public class AttendanceManager {
 			imageByte = empBean.getEmployeePhoto();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 		return imageByte;
 	}
@@ -457,6 +472,8 @@ public class AttendanceManager {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 
 		return flag;
@@ -473,11 +490,15 @@ public class AttendanceManager {
 			ibatis.commitTransaction();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		} finally {
 			try {
 				ibatis.endTransaction();
 			} catch (SQLException e) {
 				e.printStackTrace();
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
 		}
 	}
@@ -500,6 +521,8 @@ public class AttendanceManager {
 				return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 		return false;
 	}
@@ -520,21 +543,31 @@ public class AttendanceManager {
 			ibatis.commitTransaction();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		} finally {
 			try {
 				ibatis.endTransaction();
 			} catch (SQLException e) {
 				e.printStackTrace();
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
 		}
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getPortalUrl() {
 		String url = null;
 		try {
 			url = (String) ibatis.queryForObject("users.getPortalUrl", "");
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 		return url;
 	}
